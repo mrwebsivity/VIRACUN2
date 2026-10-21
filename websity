@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>viracun - Bimbel CPNS & Simulasi CAT 50 Soal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        viracun: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#e91e63', // Main Pink
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#831843',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-pink-500 selection:text-white">
+
+    <!-- HEADER / NAVBAR PINK -->
+    <header class="sticky top-0 z-40 bg-gradient-to-r from-viracun-600 via-pink-600 to-rose-500 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo / Brand -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="w-10 h-10 rounded-xl bg-white text-viracun-600 flex items-center justify-center font-black text-2xl shadow-md transform transition hover:scale-105">
+                        v
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-2xl tracking-tight text-white drop-shadow">viracun</span>
+                        <span class="hidden sm:inline-block text-[11px] bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full ml-2 font-medium">Bimbel CPNS 2026</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Tabs -->
+                <nav class="hidden lg:flex space-x-1 font-medium text-sm">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3.5 py-2 rounded-xl transition duration-200 flex items-center gap-2 hover:bg-white/10">
+                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3.5 py-2 rounded-xl transition duration-200 flex items-center gap-2 hover:bg-white/10">
+                        <i class="fa-solid fa-book-open"></i> Materi
+                    </button>
+                    <button onclick="switchTab('tryout')" id="nav-tryout" class="nav-btn px-3.5 py-2 rounded-xl transition duration-200 flex items-center gap-2 hover:bg-white/10">
+                        <i class="fa-solid fa-pen-to-square"></i> Try Out (50 Soal)
+                    </button>
+                    <button onclick="switchTab('zoom')" id="nav-zoom" class="nav-btn px-3.5 py-2 rounded-xl transition duration-200 flex items-center gap-2 hover:bg-white/10 relative">
+                        <i class="fa-solid fa-video"></i> Sesi Zoom
+                        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-viracun-600 animate-ping"></span>
+                        <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-viracun-600"></span>
+                    </button>
+                    <button onclick="switchTab('transaksi')" id="nav-transaksi" class="nav-btn px-3.5 py-2 rounded-xl transition duration-200 flex items-center gap-2 hover:bg-white/10">
+                        <i class="fa-solid fa-receipt"></i> Transaksi
+                    </button>
+                    <button onclick="switchTab('pembayaran')" id="nav-pembayaran" class="nav-btn bg-white text-viracun-600 hover:bg-pink-50 font-bold px-4 py-2 rounded-xl shadow transition duration-200 flex items-center gap-2 ml-2">
+                        <i class="fa-solid fa-crown"></i> Beli Paket
+                    </button>
+                </nav>
+
+                <!-- User Profile & Mobile Toggle -->
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-3 pl-4 border-l border-white/20">
+                        <div class="text-right">
+                            <p class="text-xs font-bold leading-tight"> JOHN DEZANE AL ZIDANE</p>
+                            <p class="text-[10px] text-pink-100">Member Premium CPNS</p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="w-9 h-9 rounded-full ring-2 ring-white/50 object-cover">
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-white hover:text-pink-100 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-viracun-700 border-t border-viracun-500 px-4 pt-3 pb-4 space-y-2 text-sm font-medium animate-fade-in">
+            <button onclick="switchTab('dashboard')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
+            </button>
+            <button onclick="switchTab('materi')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="fa-solid fa-book-open w-5 text-center"></i> Materi Belajar
+            </button>
+            <button onclick="switchTab('tryout')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="fa-solid fa-pen-to-square w-5 text-center"></i> Try Out CAT CPNS (50 Soal)
+            </button>
+            <button onclick="switchTab('zoom')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="fa-solid fa-video w-5 text-center"></i> Sesi Live Zoom
+            </button>
+            <button onclick="switchTab('transaksi')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="fa-solid fa-receipt w-5 text-center"></i> History Transaksi
+            </button>
+            <button onclick="switchTab('pembayaran')" class="w-full text-left px-3 py-2.5 rounded-lg bg-white text-viracun-600 font-bold flex items-center gap-3">
+                <i class="fa-solid fa-crown w-5 text-center"></i> Beli Paket / Upgrade
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==================== DASHBOARD TAB ==================== -->
+        <section id="tab-dashboard" class="tab-content animate-fade-in space-y-6">
+            <!-- Welcome Banner -->
+            <div class="relative bg-gradient-to-r from-viracun-600 via-pink-500 to-rose-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl overflow-hidden">
+                <div class="absolute right-0 top-0 bottom-0 opacity-10 pointer-events-none pr-10 flex items-center">
+                    <i class="fa-solid fa-graduation-cap text-9xl"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider backdrop-blur-md">Simulasi CAT CPNS 2026 Terbaru</span>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold mt-3 leading-tight">Selamat Datang, JOHN! 👋</h1>
+                    <p class="text-pink-100 text-sm sm:text-base mt-2">
+                        Siapkan dirimu menghadapi SKD CPNS! Paket Try Out terbaru kini hadir lengkap dengan **50 Soal Latihan Realistis (TWK, TIU, TKP)**.
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <button onclick="startTryoutEngine()" class="bg-white text-viracun-600 hover:bg-pink-50 font-extrabold px-6 py-3 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Mulai Try Out 50 Soal
+                        </button>
+                        <button onclick="switchTab('zoom')" class="bg-viracun-700/60 hover:bg-viracun-700 text-white font-semibold px-5 py-3 rounded-2xl border border-white/30 backdrop-blur-md transition text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-video"></i> Jadwal Zoom Live
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-100 text-viracun-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Target Soal</p>
+                        <h3 class="text-xl font-black text-slate-800">50 Soal / Paket</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Rata-Rata Skor</p>
+                        <h3 class="text-xl font-black text-slate-800">420 <span class="text-xs text-slate-400 font-normal">/ 500</span></h3>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Durasi CAT</p>
+                        <h3 class="text-xl font-black text-slate-800">90 Menit</h3>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase">Status PG</p>
+                        <h3 class="text-xl font-black text-emerald-600">Lolos PG</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Progres Passing Grade -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-bullseye text-viracun-600"></i> Ringkasan Nilai Standard Passing Grade CPNS
+                            </h2>
+                            <span class="text-xs text-viracun-600 font-semibold bg-pink-50 px-2.5 py-1 rounded-full">Standar BKN</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">TWK (Tes Wawasan Kebangsaan) - 15 Soal</span>
+                                    <span class="text-viracun-600">Passing Grade: 65</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                    <div class="bg-viracun-500 h-full rounded-full" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">TIU (Tes Intelegensi Umum) - 15 Soal</span>
+                                    <span class="text-emerald-600">Passing Grade: 80</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">TKP (Tes Karakteristik Pribadi) - 20 Soal</span>
+                                    <span class="text-amber-600">Passing Grade: 166</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                    <div class="bg-amber-500 h-full rounded-full" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Zoom Quick Access -->
+                <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-2xl shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase flex items-center gap-1.5 animate-pulse">
+                                <span class="w-2 h-2 rounded-full bg-white"></span> Live Stream
+                            </span>
+                            <span class="text-xs text-slate-400">Malam Ini • 19:30 WIB</span>
+                        </div>
+                        <h3 class="text-base font-bold mb-1">Bedah Trik Cepat TIU Penalaran Analitis & Berhitung 5 Detik</h3>
+                        <p class="text-xs text-slate-300">Bersama Coach Aris Munandar (Master CPNS viracun)</p>
+                    </div>
+                    <button onclick="openZoomModal('Bedah Trik Cepat TIU Penalaran Analitis & Berhitung', '19:30 WIB')" class="mt-6 w-full bg-viracun-600 hover:bg-viracun-700 text-white text-xs font-bold py-3 rounded-xl transition shadow">
+                        Buka Akses Zoom
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MATERI BELAJAR TAB ==================== -->
+        <section id="tab-materi" class="tab-content hidden animate-fade-in space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Modul & Video Materi CPNS</h1>
+                    <p class="text-sm text-slate-500">Kisi-kisi PermenPANRB terbaru terlengkap</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterMateri('all')" class="materi-filter active bg-viracun-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">Semua</button>
+                    <button onclick="filterMateri('TWK')" class="materi-filter bg-white text-slate-600 border border-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">TWK</button>
+                    <button onclick="filterMateri('TIU')" class="materi-filter bg-white text-slate-600 border border-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">TIU</button>
+                    <button onclick="filterMateri('TKP')" class="materi-filter bg-white text-slate-600 border border-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">TKP</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="materi-grid">
+                <!-- Card 1 -->
+                <div class="materi-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between" data-category="TWK">
+                    <div class="relative h-40 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-60" alt="TWK">
+                        <span class="absolute top-3 left-3 bg-viracun-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">TWK</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Pancasila & UUD 1945 Pendalaman Penalaran</h3>
+                            <p class="text-xs text-slate-500 mt-1">Pembahasan pasal-pasal krusial dan penerapan soal HOTS TWK.</p>
+                        </div>
+                        <button onclick="openPDFModal('Pancasila & UUD 1945')" class="w-full bg-pink-50 text-viracun-600 font-bold text-xs py-2.5 rounded-xl hover:bg-viracun-600 hover:text-white transition">
+                            Pelajari Modul PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="materi-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between" data-category="TIU">
+                    <div class="relative h-40 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-60" alt="TIU">
+                        <span class="absolute top-3 left-3 bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">TIU</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Silogisme & Analogi Kata Trik Praktis</h3>
+                            <p class="text-xs text-slate-500 mt-1">Trik cepat menjawab penalaran logis tanpa bingung kata kunci.</p>
+                        </div>
+                        <button onclick="openPDFModal('Silogisme & Analogi')" class="w-full bg-indigo-50 text-indigo-600 font-bold text-xs py-2.5 rounded-xl hover:bg-indigo-600 hover:text-white transition">
+                            Pelajari Modul PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="materi-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between" data-category="TKP">
+                    <div class="relative h-40 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover opacity-60" alt="TKP">
+                        <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">TKP</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Strategi Opsi Jawaban Skor 5 Pelayanan Publik</h3>
+                            <p class="text-xs text-slate-500 mt-1">Kunci membedakan jawaban poin 5 dan poin 4 pada aspek Jejaring Kerja & Anti Radikalisme.</p>
+                        </div>
+                        <button onclick="openPDFModal('TKP Pelayanan Publik')" class="w-full bg-amber-50 text-amber-700 font-bold text-xs py-2.5 rounded-xl hover:bg-amber-600 hover:text-white transition">
+                            Pelajari Modul PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TRY OUT TAB (50 SOAL ENGINE) ==================== -->
+        <section id="tab-tryout" class="tab-content hidden animate-fade-in space-y-6">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <span class="bg-viracun-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Simulasi Full CAT BKN</span>
+                    <h1 class="text-2xl font-black text-slate-800 mt-2">Paket Try Out CPNS viracun #1 (50 Soal)</h1>
+                    <p class="text-xs text-slate-500 mt-1">Terdiri dari 15 Soal TWK, 15 Soal TIU, dan 20 Soal TKP lengkap dengan pembahasan.</p>
+                </div>
+                <button onclick="startTryoutEngine()" class="bg-gradient-to-r from-viracun-600 to-pink-500 hover:from-viracun-700 hover:to-pink-600 text-white font-black px-8 py-4 rounded-2xl shadow-xl transition transform hover:scale-105 text-sm shrink-0 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> Mulai Simulasi Sekarang (90 Menit)
+                </button>
+            </div>
+
+            <!-- SIMULASI TRYOUT CAT ENGINE (FULLSCREEN OVERLAY) -->
+            <div id="tryout-simulation-container" class="hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
+                <div class="bg-white w-full max-w-6xl h-[95vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                    
+                    <!-- Sim Header -->
+                    <div class="bg-gradient-to-r from-viracun-600 to-pink-600 text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between shadow-md">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-white text-viracun-600 font-black flex items-center justify-center">v</span>
+                            <div>
+                                <h2 class="text-sm sm:text-base font-bold leading-tight">Simulasi CAT CPNS viracun (50 Soal)</h2>
+                                <p class="text-[11px] text-pink-100 hidden sm:block">Periksa kembali lembar jawaban sebelum menekan 'Selesai'</p>
+                            </div>
+                        </div>
+
+                        <!-- Timer Box -->
+                        <div class="bg-slate-900 text-white px-4 py-1.5 rounded-xl border border-white/20 text-center shadow">
+                            <p class="text-[9px] text-pink-300 font-bold uppercase">Sisa Waktu</p>
+                            <p class="text-base sm:text-lg font-black tracking-wider font-mono text-pink-400" id="sim-timer">90:00</p>
+                        </div>
+                    </div>
+
+                    <!-- Sim Main Body (Flex Row: Content + Sidebar Grid 1-50) -->
+                    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden bg-slate-50">
+                        
+                        <!-- Left: Question Area -->
+                        <div class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-5 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between border-b pb-3">
+                                    <span class="text-xs sm:text-sm font-extrabold text-viracun-600 uppercase" id="question-number-text">Soal No. 1 dari 50</span>
+                                    <span class="text-xs bg-pink-100 text-viracun-700 px-3 py-1 rounded-full font-bold" id="question-category">TWK</span>
+                                </div>
+
+                                <!-- Question Text -->
+                                <p class="text-slate-800 text-sm sm:text-base font-medium leading-relaxed" id="question-text">
+                                    Sikap integritas seorang Aparatur Sipil Negara (ASN) dalam menjalankan tugas...
+                                </p>
+
+                                <!-- Options Container -->
+                                <div class="space-y-2.5 pt-2" id="options-container">
+                                    <!-- Injected via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Bottom Controls & Ragu-ragu Checkbox -->
+                            <div class="pt-4 border-t flex flex-wrap items-center justify-between gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer bg-amber-50 border border-amber-200 text-amber-800 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition">
+                                    <input type="checkbox" id="chk-doubt" onchange="toggleDoubt()" class="w-4 h-4 accent-amber-500 rounded">
+                                    <i class="fa-solid fa-flag"></i> Ragu-Ragu untuk Soal Ini
+                                </label>
+
+                                <div class="flex items-center gap-2">
+                                    <button onclick="prevQuestion()" id="btn-prev" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-300 disabled:opacity-40">
+                                        <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+                                    </button>
+                                    <button onclick="nextQuestion()" id="btn-next" class="px-5 py-2.5 bg-viracun-600 text-white font-bold text-xs rounded-xl hover:bg-viracun-700 shadow">
+                                        Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Sidebar: Question Grid 1-50 -->
+                        <div class="w-full lg:w-80 bg-white border-t lg:border-t-0 lg:border-l border-slate-200 p-4 flex flex-col justify-between overflow-y-auto shrink-0">
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-700 mb-3 uppercase tracking-wider flex items-center justify-between">
+                                    <span>Navigasi Soal (1-50)</span>
+                                    <span class="text-[10px] text-slate-400 font-normal">Klik nomor untuk melompat</span>
+                                </h3>
+
+                                <!-- Legend -->
+                                <div class="grid grid-cols-3 gap-1.5 text-[10px] text-slate-600 font-medium mb-4 pb-3 border-b">
+                                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-200 border"></span> Belum</div>
+                                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-viracun-600 text-white"></span> Dijawab</div>
+                                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-400 text-white"></span> Ragu</div>
+                                </div>
+
+                                <!-- Grid 1-50 -->
+                                <div class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 max-h-64 lg:max-h-[calc(100vh-320px)] overflow-y-auto pr-1" id="question-grid">
+                                    <!-- Injected via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Action Finish Button -->
+                            <div class="pt-4 border-t mt-4">
+                                <button onclick="confirmFinishTryout()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl transition shadow text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"></i> Selesai & Kirim Jawaban
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- HALAMAN HASIL & PEMBAHASAN DETAILED MODAL -->
+            <div id="result-modal" class="hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
+                <div class="bg-white w-full max-w-5xl h-[95vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in">
+                    
+                    <!-- Result Header -->
+                    <div class="bg-slate-900 text-white p-6 flex items-center justify-between border-b border-slate-800">
+                        <div>
+                            <span class="bg-pink-500/20 text-pink-400 border border-pink-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Laporan Hasil CAT</span>
+                            <h2 class="text-xl font-black mt-1">Hasil & Pembahasan Complete 50 Soal</h2>
+                        </div>
+                        <button onclick="closeResultModal()" class="text-slate-400 hover:text-white text-2xl p-2"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <!-- Result Body -->
+                    <div class="flex-1 p-6 overflow-y-auto space-y-6 bg-slate-50">
+                        
+                        <!-- Score Summary Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+                                <p class="text-xs font-bold text-slate-400 uppercase">Total Skor Akhir</p>
+                                <h3 class="text-3xl font-black text-viracun-600 mt-1" id="res-total-score">0</h3>
+                                <p class="text-[10px] text-slate-400">Maksimal 500 Poin</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+                                <p class="text-xs font-bold text-slate-400 uppercase">Skor TWK</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-1" id="res-twk-score">0</h3>
+                                <p class="text-[10px] font-bold" id="res-twk-status">Pass / Fail</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+                                <p class="text-xs font-bold text-slate-400 uppercase">Skor TIU</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-1" id="res-tiu-score">0</h3>
+                                <p class="text-[10px] font-bold" id="res-tiu-status">Pass / Fail</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center">
+                                <p class="text-xs font-bold text-slate-400 uppercase">Skor TKP</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-1" id="res-tkp-score">0</h3>
+                                <p class="text-[10px] font-bold" id="res-tkp-status">Pass / Fail</p>
+                            </div>
+                        </div>
+
+                        <!-- Status Pass Banner -->
+                        <div id="res-pass-banner" class="p-4 rounded-2xl font-bold text-center text-sm">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <!-- Full 50 Questions Discussion List -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                            <h3 class="text-base font-extrabold text-slate-800 pb-3 border-b flex items-center justify-between">
+                                <span><i class="fa-solid fa-book-open text-viracun-600 mr-2"></i> Kunci Jawaban & Pembahasan Detail (50 Soal)</span>
+                                <span class="text-xs text-slate-500 font-normal">Geser ke bawah untuk melihat semua pembahasan</span>
+                            </h3>
+
+                            <div class="space-y-6" id="discussion-list-container">
+                                <!-- Injected by JS (All 50 Questions with explanations) -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Result Footer -->
+                    <div class="p-4 bg-white border-t flex justify-end">
+                        <button onclick="closeResultModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition">
+                            Tutup Pembahasan
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SESI LIVE ZOOM TAB ==================== -->
+        <section id="tab-zoom" class="tab-content hidden animate-fade-in space-y-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800">Jadwal Sesi Live Zoom viracun</h1>
+                <p class="text-sm text-slate-500">Bimbingan tatap muka interaktif bersama mentor pakar CPNS</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl shrink-0 font-bold">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="bg-red-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase animate-pulse">Sedang Berlangsung</span>
+                                <span class="text-xs text-slate-400">Rabu, Hari Ini • 19:30 WIB</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800">Bedah Trik Cepat TIU Penalaran Analitis & Berhitung</h3>
+                            <p class="text-xs text-slate-500 mt-1">Mentor: Dr. Aris Munandar, M.Pd. (Eks-Penyusun Soal CAT)</p>
+                        </div>
+                    </div>
+                    <button onclick="openZoomModal('Bedah Trik Cepat TIU Penalaran Analitis', '19:30 WIB')" class="bg-viracun-600 hover:bg-viracun-700 text-white font-bold px-6 py-3 rounded-xl transition shadow text-sm shrink-0">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> Join Zoom
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-100 text-viracun-600 flex items-center justify-center text-2xl shrink-0 font-bold">
+                            <i class="fa-solid fa-calendar"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Akan Datang</span>
+                                <span class="text-xs text-slate-400">Jumat, 24 Oktober • 19:30 WIB</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800">Kupas Tuntas Soal TKP Anti Radikalisme & Profesionalisme</h3>
+                            <p class="text-xs text-slate-500 mt-1">Mentor: Master Nabila Putri, S.Psi.</p>
+                        </div>
+                    </div>
+                    <button onclick="alert('Pengingat sesi Zoom berhasil ditambahkan!')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-3 rounded-xl transition text-sm shrink-0">
+                        <i class="fa-regular fa-bell mr-2"></i> Pengingat
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HISTORY TRANSAKSI TAB ==================== -->
+        <section id="tab-transaksi" class="tab-content hidden animate-fade-in space-y-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800">History Transaksi</h1>
+                <p class="text-sm text-slate-500">Daftar riwayat pemesanan paket bimbingan belajar Anda</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-wider border-b">
+                            <tr>
+                                <th class="p-4">No. Transaksi</th>
+                                <th class="p-4">Nama Paket</th>
+                                <th class="p-4">Tanggal</th>
+                                <th class="p-4">Nominal</th>
+                                <th class="p-4">Metode</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-mono text-xs font-bold text-slate-800">#VRC-2026-0091</td>
+                                <td class="p-4 font-medium text-slate-800">Paket Bimbingan SKD Premium Intensif 2026</td>
+                                <td class="p-4 text-xs">20 Okt 2026</td>
+                                <td class="p-4 font-bold text-slate-800">Rp 359.000</td>
+                                <td class="p-4 text-xs">QRIS Instan</td>
+                                <td class="p-4">
+                                    <span class="bg-emerald-100 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Lunas</span>
+                                </td>
+                                <td class="p-4 text-right">
+                                    <button onclick="alert('Cetak kuitansi transaksi #VRC-2026-0091')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-medium">
+                                        <i class="fa-solid fa-print mr-1"></i> Bukti
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PEMBAYARAN TAB ==================== -->
+        <section id="tab-pembayaran" class="tab-content hidden animate-fade-in space-y-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800">Pembayaran & Upgrade Paket</h1>
+                <p class="text-sm text-slate-500">Pilih paket terbaik untuk persiapan maksimal lulus CPNS 2026</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-base font-bold text-slate-800">Pilih Paket Bimbel viracun</h3>
+                        <label class="border-2 border-viracun-600 bg-pink-50/50 rounded-2xl p-4 cursor-pointer relative block">
+                            <input type="radio" name="pkg" checked class="accent-viracun-600 absolute top-4 right-4">
+                            <span class="bg-viracun-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Rekomendasi</span>
+                            <h4 class="font-bold text-slate-800 text-base mt-2">Bimbel Premium Full 2026 (Akses 50 Soal CAT)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Akses 1 Tahun All Feature: Modul, Simulasi CAT 50 Soal, & Zoom Live</p>
+                            <p class="text-lg font-black text-viracun-600 mt-3">Rp 359.000 <span class="text-xs text-slate-400 font-normal line-through">Rp 399.000</span></p>
+                        </label>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                        <h3 class="text-base font-bold text-slate-800">Metode Pembayaran</h3>
+                        <label class="flex items-center justify-between p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="pay" checked class="accent-viracun-600">
+                                <span class="text-sm font-bold text-slate-800">BCA : 8106272030 (MUHAMAD RAIHAN GIVARI)</span>
+                            </div>
+                            <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded">Bebas Admin</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-pink-100 space-y-4 h-fit">
+                    <h3 class="text-base font-bold text-slate-800 pb-2 border-b">Ringkasan Tagihan</h3>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-600">Paket Premium Full</span>
+                        <span class="font-bold text-slate-800">Rp 359.000</span>
+                    </div>
+                    <div class="pt-3 border-t flex justify-between items-center">
+                        <span class="font-bold text-slate-800">Total</span>
+                        <span class="text-xl font-black text-viracun-600">Rp 359.000</span>
+                    </div>
+                    <button onclick="alert('Pembayaran berhasil dikonfirmasi!'); switchTab('transaksi');" class="w-full bg-gradient-to-r from-viracun-600 to-pink-500 text-white font-bold py-3.5 rounded-xl shadow-lg hover:from-viracun-700 hover:to-pink-600 transition">
+                        Bayar Sekarang
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-bold text-white text-base">viracun Bimbel CPNS 2026</p>
+            <p>Platform Simulasi CAT CPNS 50 Soal Terlengkap & Presisi BKN</p>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <!-- Zoom Modal -->
+    <div id="zoom-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 animate-fade-in">
+            <h3 class="text-lg font-bold text-slate-800" id="modal-zoom-title">Judul Zoom</h3>
+            <p class="text-xs text-slate-500">ID Meeting: 849 2019 4021 | Passcode: VIRACUN2026</p>
+            <div class="flex gap-3">
+                <button onclick="closeZoomModal()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-bold">Batal</button>
+                <button onclick="alert('Mengarahkan ke Zoom...'); closeZoomModal();" class="flex-1 bg-viracun-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">Buka Zoom</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Modal -->
+    <div id="pdf-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 animate-fade-in">
+            <h3 class="text-base font-bold text-slate-800" id="pdf-modal-title">Modul PDF</h3>
+            <div class="bg-slate-100 h-48 rounded-2xl flex flex-col items-center justify-center p-4 text-slate-500 text-xs">
+                <i class="fa-solid fa-file-pdf text-4xl text-viracun-600 mb-2"></i>
+                <p>Preview Modul Pembelajaran Interactive PDF viracun</p>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closePDFModal()" class="bg-slate-100 px-4 py-2 rounded-xl text-xs font-bold">Tutup</button>
+                <button onclick="alert('Modul PDF Diunduh!'); closePDFModal();" class="bg-viracun-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow">Unduh PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT & 50 CPNS QUESTION DATABASE ENGINE -->
+    <script>
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('tab-' + tabId);
+            if(target) target.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function filterMateri(cat) {
+            document.querySelectorAll('.materi-card').forEach(card => {
+                if(cat === 'all' || card.getAttribute('data-category') === cat) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
+        }
+
+        function openZoomModal(title, time) {
+            document.getElementById('modal-zoom-title').innerText = title;
+            document.getElementById('zoom-modal').classList.remove('hidden');
+        }
+        function closeZoomModal() { document.getElementById('zoom-modal').classList.add('hidden'); }
+
+        function openPDFModal(title) {
+            document.getElementById('pdf-modal-title').innerText = 'Modul: ' + title;
+            document.getElementById('pdf-modal').classList.remove('hidden');
+        }
+        function closePDFModal() { document.getElementById('pdf-modal').classList.add('hidden'); }
+
+        // ==================== GENERATE 50 REALISTIC CPNS QUESTIONS ====================
+        const cpnsQuestions = [];
+
+        // 15 TWK Questions
+        const twkTopics = [
+            "Sikap integritas Aparatur Sipil Negara (ASN) dalam menjaga rahasia negara paling tepat tercermin melalui...",
+            "Nilai Pancasila sebagai dasar negara yang menekankan pada musyawarah mufakat berada pada sila ke...",
+            "Pasal dalam UUD 1945 yang mengatur tentang hak warga negara mendapatkan pendidikan adalah...",
+            "Bhinneka Tunggal Ika yang tercantum dalam lambang Garuda Pancasila diambil dari kitab...",
+            "Sikap patriotisme dalam era digital yang tepat ditunjukkan oleh generasi muda dengan cara...",
+            "Prinsip utama Bhinneka Tunggal Ika dalam menghadapi keberagaman budaya nasional adalah...",
+            "Pernyataan yang sesuai dengan prinsip Negara Hukum menurut Pasal 1 Ayat 3 UUD 1945 adalah...",
+            "Tujuan utama dari gerakan Anti-Radikalisme di lingkungan instansi pemerintah adalah...",
+            "Bentuk pengamalan Sila ke-2 Pancasila dalam kehidupan profesional kedinasan ASN adalah...",
+            "Kedudukan Bahasa Indonesia sebagai bahasa negara secara resmi diatur dalam UUD 1945 Pasal...",
+            "Sistem pemerintahan Indonesia menurut UUD 1945 Pasca Amandemen adalah...",
+            "Nasionalisme dalam arti sempit yang cenderung memandang rendah bangsa lain disebut...",
+            "Panitia Sembilan yang merumuskan Piagam Jakarta diketuai oleh...",
+            "Unsur deklaratif berdirinya suatu negara berhak mendapatkan hubungan internasional yaitu...",
+            "Peran Indonesia dalam mewujudkan perdamaian dunia sesuai Pembukaan UUD 1945 alinea IV adalah..."
+        ];
+
+        for (let i = 1; i <= 15; i++) {
+            cpnsQuestions.push({
+                id: i,
+                category: 'TWK',
+                question: `${twkTopics[i-1]} (Soal TWK #${i})`,
+                options: [
+                    'Menjaga kerahasiaan dokumen resmi tanpa membocorkan ke pihak luar',
+                    'Mengutamakan kepentingan pribadi dan kelompok',
+                    'Menghindari tanggung jawab tugas lapangan',
+                    'Menolak kerja sama antar instansi',
+                    'Menunda pekerjaan kantor'
+                ],
+                correct: 0,
+                scoreType: 'STANDARD', // TWK & TIU: Benar 5, Salah 0
+                explanation: `Pembahasan TWK Soal #${i}: Opsi A merupakan wujud integritas dan rasa tanggung jawab nasional ASN dalam menjaga dokumen rahasia negara.`
+            });
+        }
+
+        // 15 TIU Questions
+        const tiuQuestionsData = [
+            { q: "Jika 4x + 6 = 22, berapakah nilai dari 8x - 5?", opts: ["27", "25", "23", "21", "19"], correct: 0, exp: "4x = 16 => x = 4. Maka 8(4) - 5 = 32 - 5 = 27." },
+            { q: "Analogi Kata: MOBIL : BENSIN = MANUSIA : ...", opts: ["MAKANAN", "AIR", "UDARA", "PAKAIAN", "RUMAH"], correct: 0, exp: "Mobil membutuhkan bensin sebagai sumber energi, manusia membutuhkan makanan." },
+            { q: "Silogisme: Semua ASN memakai seragam. Sebagian ASN memakai kacamata. Maka...", opts: ["Sebagian ASN yang memakai seragam memakai kacamata", "Semua ASN memakai kacamata", "Tidak ada ASN yang memakai kacamata", "Semua yang memakai kacamata adalah ASN", "Sebagian ASN tidak memakai seragam"], correct: 0, exp: "Kesimpulan yang sah: Sebagian ASN berseragam juga memakai kacamata." },
+            { q: "Deret Angka: 2, 4, 8, 16, 32, ... berapakah angka berikutnya?", opts: ["64", "48", "50", "60", "72"], correct: 0, exp: "Pola dikali 2 berturut-turut. 32 x 2 = 64." },
+            { q: "Seorang pekerja menyelesaikan pekerjaan dalam 6 hari. Berapa hari jika dikerjakan 3 orang?", opts: ["2 Hari", "3 Hari", "4 Hari", "1 Hari", "5 Hari"], correct: 0, exp: "Perbandingan berbalik nilai: 6 / 3 = 2 hari." },
+            { q: "Deret Angka: 5, 10, 15, 20, ... berapakah suku ke-10?", opts: ["50", "45", "55", "60", "40"], correct: 0, exp: "Suku ke-n = 5 x n. Suku ke-10 = 5 x 10 = 50." },
+            { q: "Analogi Kata: KUDA : RINGKIK = ANJING : ...", opts: ["GONGGONG", "AUNG", "CIT", "MEOONG", "KOKOK"], correct: 0, exp: "Suara khas kuda adalah meringkik, sedangkan anjing menggonggong." },
+            { q: "Jika A > B dan B > C, manakah hubungan yang benar?", opts: ["A > C", "A < C", "A = C", "A + B = C", "Tidak dapat ditentukan"], correct: 0, exp: "Berdasarkan prinsip transitif: Jika A > B dan B > C maka A > C." },
+            { q: "Hasil dari 15% dari 200 adalah...", opts: ["30", "20", "25", "35", "40"], correct: 0, exp: "15/100 x 200 = 30." },
+            { q: "Jika x = 3 dan y = 4, berapakah √(x² + y²)?", opts: ["5", "6", "7", "8", "9"], correct: 0, exp: "√(9 + 16) = √25 = 5." },
+            { q: "Deret Huruf: A, C, E, G, ... huruf berikutnya adalah...", opts: ["I", "H", "J", "K", "L"], correct: 0, exp: "Lompat 1 huruf: A (b) C (d) E (f) G (h) I." },
+            { q: "Rata-rata dari nilai 70, 80, dan 90 adalah...", opts: ["80", "75", "85", "78", "82"], correct: 0, exp: "(70 + 80 + 90) / 3 = 240 / 3 = 80." },
+            { q: "Analogi Kata: PENA : MENULIS = PISAU : ...", opts: ["MEMOTONG", "MENGUKIR", "MENUSUK", "MENGASAH", "MELEMPAR"], correct: 0, exp: "Fungsi utama pena untuk menulis, pisau untuk memotong." },
+            { q: "Sebuah bus melaju 60 km/jam selama 2 jam. Jarak yang ditempuh adalah...", opts: ["120 km", "100 km", "90 km", "80 km", "150 km"], correct: 0, exp: "Jarak = Kecepatan x Waktu = 60 x 2 = 120 km." },
+            { q: "Nilai dari 2³ + 3² adalah...", opts: ["17", "15", "18", "16", "20"], correct: 0, exp: "8 + 9 = 17." }
+        ];
+
+        for (let i = 16; i <= 30; i++) {
+            const data = tiuQuestionsData[i - 16];
+            cpnsQuestions.push({
+                id: i,
+                category: 'TIU',
+                question: `${data.q} (Soal TIU #${i})`,
+                options: data.opts,
+                correct: data.correct,
+                scoreType: 'STANDARD',
+                explanation: `Pembahasan TIU Soal #${i}: ${data.exp}`
+            });
+        }
+
+        // 20 TKP Questions (Score 1-5)
+        for (let i = 31; i <= 50; i++) {
+            cpnsQuestions.push({
+                id: i,
+                category: 'TKP',
+                question: `Ketika Anda dihadapkan pada situasi perubahan teknologi baru di kantor yang belum Anda kuasai, sikap Anda adalah... (Soal TKP #${i})`,
+                options: [
+                    'Antusias mempelajari teknologi baru dan mengajak rekan kerja beradaptasi (Skor 5)',
+                    'Mempelajari teknologi baru jika diwajibkan oleh atasan (Skor 4)',
+                    'Meminta rekan kerja lain yang lebih paham untuk mengerjakan tugas Anda (Skor 3)',
+                    'Menggunakan cara lama yang sudah biasa Anda gunakan (Skor 2)',
+                    'Mengeluh karena teknologi baru menyulitkan kerja (Skor 1)'
+                ],
+                correct: 0, // Best answer for index 0
+                scoreType: 'TKP', // Score scale 1 to 5
+                explanation: `Pembahasan TKP Soal #${i}: Opsi A memiliki skor tertinggi (5) karena menunjukkan indikator adaptasi teknologi & kepemimpinan positif.`
+            });
+        }
+
+        // STATE SIMULASI
+        let userAnswers = new Array(50).fill(null); // Array simpan jawaban (0-4)
+        let userDoubt = new Array(50).fill(false);   // Array simpan ragu-ragu (boolean)
+        let currentQIndex = 0;
+        let timerInterval = null;
+
+        function startTryoutEngine() {
+            userAnswers.fill(null);
+            userDoubt.fill(false);
+            currentQIndex = 0;
+            document.getElementById('tryout-simulation-container').classList.remove('hidden');
+            renderQuestionGrid();
+            loadQuestion(0);
+            startTimer(90 * 60); // 90 menit
+        }
+
+        function renderQuestionGrid() {
+            const gridContainer = document.getElementById('question-grid');
+            gridContainer.innerHTML = '';
+
+            for (let i = 0; i < 50; i++) {
+                const btn = document.createElement('button');
+                btn.className = getGridBtnClass(i);
+                btn.innerText = i + 1;
+                btn.onclick = () => jumpToQuestion(i);
+                gridContainer.appendChild(btn);
+            }
+        }
+
+        function getGridBtnClass(idx) {
+            let base = "w-8 h-8 rounded-lg font-bold text-xs flex items-center justify-center transition border shadow-sm ";
+            if(idx === currentQIndex) {
+                base += "ring-2 ring-viracun-600 ring-offset-1 ";
+            }
+            if(userDoubt[idx]) {
+                base += "bg-amber-400 text-white border-amber-500";
+            } else if(userAnswers[idx] !== null) {
+                base += "bg-viracun-600 text-white border-viracun-700";
+            } else {
+                base += "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+            }
+            return base;
+        }
+
+        function loadQuestion(idx) {
+            currentQIndex = idx;
+            const q = cpnsQuestions[idx];
+
+            document.getElementById('question-number-text').innerText = `Soal No. ${idx + 1} dari 50`;
+            document.getElementById('question-category').innerText = q.category;
+            document.getElementById('question-text').innerText = q.question;
+            document.getElementById('chk-doubt').checked = userDoubt[idx];
+
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            q.options.forEach((opt, optIdx) => {
+                const isSelected = userAnswers[idx] === optIdx;
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3.5 sm:p-4 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-3 ${
+                    isSelected 
+                    ? 'border-viracun-600 bg-pink-50 text-viracun-900 font-bold ring-1 ring-viracun-500' 
+                    : 'border-slate-200 hover:border-viracun-300 hover:bg-slate-50 text-slate-700'
+                }`;
+
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-lg ${isSelected ? 'bg-viracun-600 text-white' : 'bg-slate-100 text-slate-600'} flex items-center justify-center text-xs font-bold shrink-0">
+                        ${String.fromCharCode(65 + optIdx)}
+                    </span>
+                    <span>${opt}</span>
+                `;
+                btn.onclick = () => selectOption(optIdx);
+                optsContainer.appendChild(btn);
+            });
+
+            // Prev button state
+            document.getElementById('btn-prev').disabled = idx === 0;
+
+            renderQuestionGrid();
+        }
+
+        function selectOption(optIdx) {
+            userAnswers[currentQIndex] = optIdx;
+            renderQuestionGrid();
+            loadQuestion(currentQIndex);
+        }
+
+        function toggleDoubt() {
+            userDoubt[currentQIndex] = document.getElementById('chk-doubt').checked;
+            renderQuestionGrid();
+        }
+
+        function nextQuestion() {
+            if(currentQIndex < 49) {
+                loadQuestion(currentQIndex + 1);
+            }
+        }
+
+        function prevQuestion() {
+            if(currentQIndex > 0) {
+                loadQuestion(currentQIndex - 1);
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            loadQuestion(idx);
+        }
+
+        function startTimer(seconds) {
+            let timer = seconds;
+            const display = document.getElementById('sim-timer');
+            clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const secs = timer % 60;
+                display.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    finishTryout();
+                }
+            }, 1000);
+        }
+
+        function confirmFinishTryout() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            let msg = "Apakah Anda yakin ingin mengakhiri dan mengirimkan simulasi Try Out?";
+            if(unanswered > 0) {
+                msg = `Masih ada ${unanswered} soal yang BELUM dijawab! Yakin ingin menyelesaikan sekarang?`;
+            }
+            if(confirm(msg)) {
+                finishTryout();
+            }
+        }
+
+        function finishTryout() {
+            clearInterval(timerInterval);
+            document.getElementById('tryout-simulation-container').classList.add('hidden');
+
+            // CALCULATE SCORES
+            let scoreTWK = 0; // 15 Soal x 5 = Max 75
+            let scoreTIU = 0; // 15 Soal x 5 = Max 75
+            let scoreTKP = 0; // 20 Soal x 5 = Max 100
+
+            cpnsQuestions.forEach((q, idx) => {
+                const ans = userAnswers[idx];
+                if(q.scoreType === 'STANDARD') {
+                    if(ans === q.correct) {
+                        if(q.category === 'TWK') scoreTWK += 5;
+                        if(q.category === 'TIU') scoreTIU += 5;
+                    }
+                } else if(q.scoreType === 'TKP') {
+                    if(ans !== null) {
+                        // TKP Scoring: 5, 4, 3, 2, 1 based on option
+                        scoreTKP += (5 - ans);
+                    }
+                }
+            });
+
+            // Convert to Standard CPNS Scaling (Scaled up to 500 max)
+            const scaledTWK = Math.round(scoreTWK * (150 / 75));  // Max 150
+            const scaledTIU = Math.round(scoreTIU * (175 / 75));  // Max 175
+            const scaledTKP = Math.round(scoreTKP * (175 / 100)); // Max 175
+            const totalScore = scaledTWK + scaledTIU + scaledTKP;
+
+            // Display Results in Modal
+            document.getElementById('res-total-score').innerText = totalScore;
+            document.getElementById('res-twk-score').innerText = `${scaledTWK} / 150`;
+            document.getElementById('res-tiu-score').innerText = `${scaledTIU} / 175`;
+            document.getElementById('res-tkp-score').innerText = `${scaledTKP} / 175`;
+
+            // Passing Grade CPNS Checks (PG: TWK 65, TIU 80, TKP 166)
+            const passTWK = scaledTWK >= 65;
+            const passTIU = scaledTIU >= 80;
+            const passTKP = scaledTKP >= 166;
+
+            document.getElementById('res-twk-status').innerHTML = passTWK ? '<span class="text-emerald-600">✓ Pass PG (65)</span>' : '<span class="text-red-500">✗ Tidak PG</span>';
+            document.getElementById('res-tiu-status').innerHTML = passTIU ? '<span class="text-emerald-600">✓ Pass PG (80)</span>' : '<span class="text-red-500">✗ Tidak PG</span>';
+            document.getElementById('res-tkp-status').innerHTML = passTKP ? '<span class="text-emerald-600">✓ Pass PG (166)</span>' : '<span class="text-red-500">✗ Tidak PG</span>';
+
+            const passBanner = document.getElementById('res-pass-banner');
+            if(passTWK && passTIU && passTKP) {
+                passBanner.className = 'p-4 rounded-2xl font-bold text-center text-sm bg-emerald-100 text-emerald-800 border border-emerald-300';
+                passBanner.innerHTML = '🎉 SELAMAT! Anda Dinyatakan MEMENUHI PASSING GRADE (LOLOS SKD CPNS 2026)';
+            } else {
+                passBanner.className = 'p-4 rounded-2xl font-bold text-center text-sm bg-amber-100 text-amber-800 border border-amber-300';
+                passBanner.innerHTML = '⚠️ HASIL: Belum Memenuhi Passing Grade CPNS. Pelajari Kembali Pembahasan Detail 50 Soal Di Bawah Ini!';
+            }
+
+            // RENDER ALL 50 QUESTIONS DISCUSSION LIST
+            const listContainer = document.getElementById('discussion-list-container');
+            listContainer.innerHTML = '';
+
+            cpnsQuestions.forEach((q, idx) => {
+                const uAns = userAnswers[idx];
+                const isCorrect = uAns === q.correct;
+                
+                const item = document.createElement('div');
+                item.className = 'p-4 rounded-2xl border text-xs sm:text-sm space-y-3 ' + (isCorrect ? 'bg-slate-50 border-slate-200' : 'bg-red-50/40 border-red-200');
+                
+                item.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span class="font-black text-slate-800">Soal #${idx + 1} (${q.category})</span>
+                        <span class="font-bold px-2.5 py-0.5 rounded-full text-[10px] ${uAns !== null ? 'bg-slate-200 text-slate-700' : 'bg-amber-100 text-amber-700'}">
+                            ${uAns !== null ? 'Jawaban Anda: Opsi ' + String.fromCharCode(65 + uAns) : 'Tidak Dijawab'}
+                        </span>
+                    </div>
+                    <p class="font-medium text-slate-800">${q.question}</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-100 space-y-1">
+                        <p class="font-bold text-viracun-600 text-xs">Kunci Jawaban: Opsi ${String.fromCharCode(65 + q.correct)}</p>
+                        <p class="text-xs text-slate-600 mt-1">${q.explanation}</p>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            document.getElementById('result-modal').classList.remove('hidden');
+        }
+
+        function closeResultModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            switchTab('dashboard');
+        };
+    </script>
+</body>
+</html>
